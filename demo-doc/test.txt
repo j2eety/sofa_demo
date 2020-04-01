@@ -1,0 +1,40 @@
+POST /api/v1/uc/accounts/register
+
+{
+  "appId": "101",
+  "email": "xuan@123@123.com",
+  "extention": {"corp":"lv","emp":[1,2,3]},
+  "nickname": "xuanxuan",
+  "password": "123456",
+  "phone": "02512345678",
+  "photo": "http://img.com",
+  "pwdAlg": "md5",
+  "userId": 123,
+  "username": "xuan"
+}
+
+
+POST http://127.0.0.1:7070/api/v1/uc/address
+{
+  "appId": "101",
+  "city": "南京",
+  "detail": "江宁区将军大道",
+  "district": "江宁区",
+  "phone": "15412341234",
+  "province": "江苏省",
+  "street": "将军大道",
+  "telephone": "15850677215",
+  "userId": 123,
+  "zipcode": "123456"
+}
+
+
+{
+  "appId": "101",
+  "isLeaf": "string",
+  "orgArea": "IT部门",
+  "orgCode": "IT 001",
+  "orgLevel": "1",
+  "parentorgId": 0,
+  "tenantId": "101"
+}

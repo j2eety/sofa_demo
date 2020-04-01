@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- 数据库驱动:选择你的本地硬盘上面的数据库驱动包-->
+    <classPathEntry  location="/Users/xuanwei/Tools/postgresql-8.3-604.jdbc3.jar"/>
+    <context id="PostgresqlDB" defaultModelType="flat"  targetRuntime="MyBatis3">
+        <!-- 自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；
+                一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖
+             -->
+        <property name="autoDelimitKeywords" value="false"/>
+        <!-- 生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <!-- 格式化java代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter"/>
+        <!-- 格式化XML代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter"/>
+
+        <!-- beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号； -->
+        <property name="beginningDelimiter" value="&quot;"/>
+        <property name="endingDelimiter" value="&quot;"/>
+
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin" />
+        <plugin type="com.itfsw.mybatis.generator.plugins.LombokPlugin" />
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
+        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleEnhancedPlugin" />
+        <plugin type="com.itfsw.mybatis.generator.plugins.IncrementsPlugin" />
+        <plugin type="com.itfsw.mybatis.generator.plugins.LogicalDeletePlugin">
+            <!-- 这里配置的是全局逻辑删除列和逻辑删除值，当然在table中配置的值会覆盖该全局配置 -->
+            <!-- 逻辑删除列类型只能为数字、字符串或者布尔类型 -->
+            <property name="logicalDeleteColumn" value="is_deleted"/>
+            <!-- 逻辑删除-已删除值 -->
+            <property name="logicalDeleteValue" value="9"/>
+            <!-- 逻辑删除-未删除值 -->
+            <property name="logicalUnDeleteValue" value="0"/>
+            <!-- 逻辑删除常量名称，不配置默认为 IS_DELETED -->
+            <property name="logicalDeleteConstName" value="IS_DELETED"/>
+            <!-- 逻辑删除常量（未删除）名称，不配置默认为 NOT_DELETED -->
+            <property name="logicalUnDeleteConstName" value="NOT_DELETED"/>
+        </plugin>
+
+        <plugin type="com.itfsw.mybatis.generator.plugins.ExampleTargetPlugin">
+            <!-- 修改Example类生成到目标包下 -->
+            <property name="targetPackage" value="io.wharfoo.biztier.demo.tunnel.database.condition"/>
+        </plugin>
+
+        <plugin type="com.itfsw.mybatis.generator.plugins.BatchInsertPlugin" />
+        <plugin type="com.itfsw.mybatis.generator.plugins.ModelColumnPlugin" />
+
+        <plugin type="org.mybatis.generator.plugins.RenameExampleClassPlugin">
+            <property name="searchString" value="DOExample$"/>
+            <property name="replaceString" value="Example"/>
+        </plugin>
+
+        <plugin type="com.itfsw.mybatis.generator.plugins.CommentPlugin">
+            <property name="template" value="wharfoo-comment.ftl"/>
+        </plugin>
+        <plugin type="com.itfsw.mybatis.generator.plugins.SelectiveEnhancedPlugin" />
+
+
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+        <!--数据库链接URL，用户名、密码 -->
+        <jdbcConnection driverClass="org.postgresql.Driver" connectionURL="jdbc:postgresql://192.168.11.220/usercenter" userId="postgres" password="postgres123">
+        </jdbcConnection>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+        <!-- 生成模型的包名和位置-->
+        <javaModelGenerator targetPackage="io.wharfoo.biztier.demo.tunnel.database.dataobject" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="io.wharfoo.biztier.demo.tunnel.database.dataobject.UserDataBaseDO"/>
+        </javaModelGenerator>
+        <!-- 生成映射文件的包名和位置-->
+        <sqlMapGenerator targetPackage="sqlmapper" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+        <!-- 生成DAO的包名和位置-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="io.wharfoo.biztier.demo.tunnel.database.mapper" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+        <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_account"  domainObjectName="UserAccountDO"  mapperName="UserAccountMapper">
+
+            <!--<property name="incrementsColumns" value="sku_quantity"/>-->
+            <property name="selectAllOrderByClause" value="id，user_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_account_id_seq')"/>
+            <columnOverride column="extention" typeHandler="io.wharfoo.biztier.common.util.typehandler.JSONTypeHandler"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_address"
+                domainObjectName="UserAddressDO"  mapperName="UserAddressMapper">
+            <property name="selectAllOrderByClause" value="id，address_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_address_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_corp_employee"
+                domainObjectName="UserCorpEmployeeDO"  mapperName="UserCorpEmployeeMapper">
+            <property name="selectAllOrderByClause" value="id，corp_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_corp_employee_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_corp_org"
+                domainObjectName="UserCorpOrgDO"  mapperName="UserCorpOrgMapper">
+            <property name="selectAllOrderByClause" value="id，corp_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_corp_org_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_corp_wg"
+                domainObjectName="UserCorpWgDO"  mapperName="UserCorpWgMapper">
+            <property name="selectAllOrderByClause" value="id，corp_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_corp_wg')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_corporation"
+                domainObjectName="UserCorporationDO"  mapperName="UserCorporationMapper">
+            <property name="selectAllOrderByClause" value="id，corp_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_corporation_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_employee"
+                domainObjectName="UserEmployeeDO"  mapperName="UserEmployeeMapper">
+            <property name="selectAllOrderByClause" value="id，emp_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_employee_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_ext"
+                domainObjectName="UserExtDO"  mapperName="UserExtMapper">
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_ext_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_org_employee"
+                domainObjectName="UserOrgEmployeeDO"  mapperName="UserOrgEmployeeMapper">
+            <property name="selectAllOrderByClause" value="id，org_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_org_employee_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_organization"
+                domainObjectName="UserOrganizationDO"  mapperName="UserOrganizationMapper">
+            <property name="selectAllOrderByClause" value="id，org_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_organization_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_payinfo"
+                domainObjectName="UserPayinfoDO"  mapperName="UserPayinfoMapper">
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_payinfo_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_tag"
+                domainObjectName="UserTagDO"  mapperName="UserTagMapper">
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_tag_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_thirdpartaccount"
+                domainObjectName="UserThirdpartaccountDO"  mapperName="UserThirdpartaccountMapper">
+            <property name="selectAllOrderByClause" value="id，user_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_thirdpartaccount_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_user"
+                domainObjectName="UserUserDO"  mapperName="UserUserMapper">
+            <property name="selectAllOrderByClause" value="id，user_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_user_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_wg_employee"
+                domainObjectName="UserWgEmployeeDO"  mapperName="UserWgEmployeeMapper">
+            <property name="selectAllOrderByClause" value="id，wg_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_wg_employee_id_seq')"/>
+        </table>
+        <table  schema="uc" catalog="" alias="" delimitIdentifiers="true" tableName="user_workgroup"
+                domainObjectName="UserWorkgroupDO"  mapperName="UserWorkgroupMapper">
+            <property name="selectAllOrderByClause" value="id，wg_id"/>
+            <generatedKey column="id" sqlStatement="SELECT nextval('uc.user_workgroup_id_seq')"/>
+        </table>
+    </context>
+</generatorConfiguration>

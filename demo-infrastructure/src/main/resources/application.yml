@@ -1,0 +1,40 @@
+server:
+  port: 7070
+  servlet:
+    context-path: /api/v1/uc
+
+
+spring:
+    datasource:
+        name: test
+        #url: jdbc:mysql://127.0.0.1:3306/user_db?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+        url: jdbc:postgresql://192.168.11.220:5432/usercenter?stringtype=unspecified&useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+        username: postgres
+        password: postgres123
+        # 使用druid数据源
+        type: com.alibaba.druid.pool.DruidDataSource
+        #driver-class-name: com.mysql.jdbc.Driver
+        driver-class-name: org.postgresql.Driver
+        filters: stat
+        maxActive: 20
+        initialSize: 1
+        maxWait: 60000
+        minIdle: 1
+        timeBetweenEvictionRunsMillis: 60000
+        minEvictableIdleTimeMillis: 300000
+        validationQuery: select 'x'
+        testWhileIdle: true
+        testOnBorrow: false
+        testOnReturn: false
+        poolPreparedStatements: true
+        maxOpenPreparedStatements: 20
+    devtools:
+        restart:
+          enabled: true
+mybatis:
+  mapper-locations: classpath:sqlmapper/**/*.xml
+  type-aliases-package: io.wharfoo.biztier.usercenter.tunnel.database.dataobject.uc
+  type-handlers-package: io.wharfoo.biztier.common.util.typehandler.JSONTypeHandler
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
